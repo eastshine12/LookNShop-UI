@@ -136,9 +136,9 @@ function Navigation() {
               onClose={handleMenuClose}
               style={{ marginTop: 40 }}
             >
-              <MenuItem>Sign Up</MenuItem>
-              <MenuItem>Log In</MenuItem>
-              <MenuItem>Order History</MenuItem>
+              <MenuItem>회원가입</MenuItem>
+              <MenuItem>로그인</MenuItem>
+              <MenuItem>주문내역</MenuItem>
               {/* ... */}
             </Menu>
           </div>
