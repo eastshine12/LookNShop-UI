@@ -64,14 +64,12 @@ function CustomCarousel() {
     setDragging(false);
   };
 
-
-
   return (
     <Carousel
       ref={carouselRef}
       autoPlay
       indicators={false}
-      animation='slide'
+      animation="slide"
       fullHeightHover
       swipe
       interval={5000}
@@ -102,9 +100,9 @@ function CustomCarousel() {
             alt={`slide-${index}`}
             style={{ width: '100%', height: 'auto' }}
           />
-          <div style={{ position: 'absolute', bottom: 16, left: 16 }}>
+          <div style={{ position: 'absolute', bottom: 70, left: 70 }}>
             <Typography
-              variant="h6"
+              variant="h1"
               style={{ fontWeight: 'bold', color: 'white' }}
             >
               {item.text}

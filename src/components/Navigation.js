@@ -7,7 +7,7 @@ import {
   InputBase,
   AppBar,
   Toolbar,
-  Typography,
+  // Typography,
 } from '@mui/material';
 
 import { AccountCircle, Search, ShoppingCart } from '@mui/icons-material';
@@ -60,13 +60,13 @@ function Navigation() {
         {/* 로고 */}
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <img
-            src="logo.png"
+            src="images/logo.png"
             alt="Logo"
-            style={{ width: 40, height: 40, marginRight: 8 }}
+            style={{ width: '100%', height: 36, marginRight: 5 }}
           />
-          <Typography variant="h6" color="inherit" noWrap>
+          {/* <Typography variant="h6" color="inherit" noWrap>
             LookNShop
-          </Typography>
+          </Typography> */}
         </div>
 
         {/* 메뉴 */}
