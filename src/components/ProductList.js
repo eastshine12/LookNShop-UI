@@ -1,118 +1,171 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
 
+const products = [
+  {
+    id: 'XMMTP03H3',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product1.jpg',
+    thumbnail2: 'images/product1-1.jpg',
+    reviews: 74,
+    name: '스트레치 기모 조거팬츠 블랙',
+    discountRate: 23,
+    price: 89011,
+    totalStock: 100,
+  },
+  {
+    id: 'XMMPJ02H4',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product2.jpg',
+    thumbnail2: 'images/product2-2.jpg',
+    reviews: 155,
+    name: '커뮤터 스트레치 라이트 롱 패딩 그레이',
+    discountRate: 15,
+    price: 199000,
+    totalStock: 100,
+  },
+  {
+    id: 'XMF29592',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product3.webp',
+    reviews: 201,
+    name: '(1+1) 모노 카라 니트 집업',
+    discountRate: 14,
+    price: 58000,
+    totalStock: 100,
+  },
+  {
+    id: 'XMMTP03H55',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product1.jpg',
+    thumbnail2: 'images/product1-1.jpg',
+    reviews: 74,
+    name: '스트레치 기모 조거팬츠 블랙',
+    discountRate: 22,
+    price: 89000,
+    totalStock: 100,
+  },
+  {
+    id: 'XMMPJ02H66',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product2.jpg',
+    thumbnail2: 'images/product2-2.jpg',
+    reviews: 155,
+    name: '커뮤터 스트레치 라이트 롱 패딩 그레이',
+    discountRate: 15,
+    price: 199000,
+    totalStock: 100,
+  },
+  {
+    id: 'XMF295922',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product3.webp',
+    reviews: 201,
+    name: '(1+1) 모노 카라 니트 집업',
+    discountRate: 14,
+    price: 58000,
+    totalStock: 100,
+  },
+  {
+    id: 'XMMTP03H61',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product1.jpg',
+    thumbnail2: 'images/product1-1.jpg',
+    reviews: 74,
+    name: '스트레치 기모 조거팬츠 블랙',
+    discountRate: 22,
+    price: 89000,
+    totalStock: 100,
+  },
+  {
+    id: 'XMMPJ02H67',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product2.jpg',
+    thumbnail2: 'images/product2-2.jpg',
+    reviews: 155,
+    name: '커뮤터 스트레치 라이트 롱 패딩 그레이',
+    discountRate: 15,
+    price: 199000,
+    totalStock: 100,
+  },
+  {
+    id: 'XMF2959122',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product3.webp',
+    reviews: 201,
+    name: '(1+1) 모노 카라 니트 집업',
+    discountRate: 14,
+    price: 58000,
+    totalStock: 100,
+  },
+  {
+    id: 'XMMTP03H437',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product1.jpg',
+    thumbnail2: 'images/product1-1.jpg',
+    reviews: 74,
+    name: '스트레치 기모 조거팬츠 블랙',
+    discountRate: 22,
+    price: 89000,
+    totalStock: 100,
+  },
+  {
+    id: 'XMMPJ0223H48',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product2.jpg',
+    thumbnail2: 'images/product2-2.jpg',
+    reviews: 155,
+    name: '커뮤터 스트레치 라이트 롱 패딩 그레이',
+    discountRate: 15,
+    price: 199000,
+    totalStock: 100,
+  },
+  {
+    id: 'XMF295592',
+    partnerName: '업체이름1',
+    thumbnail: 'images/product3.webp',
+    reviews: 201,
+    name: '(1+1) 모노 카라 니트 집업',
+    discountRate: 0,
+    price: 58000,
+    totalStock: 100,
+  },
+  // Add more products as needed
+];
+
 function ProductList() {
-  const products = [
-    {
-      id: 'XMMTP03H3',
-      thumbnail: 'images/product1.jpg',
-      reviews: 74,
-      name: '스트레치 기모 조거팬츠 블랙',
-      discountRate: 22,
-      price: 89000,
-    },
-    {
-      id: 'XMMPJ02H4',
-      thumbnail: 'images/product2.jpg',
-      reviews: 155,
-      name: '커뮤터 스트레치 라이트 롱 패딩 그레이',
-      discountRate: 15,
-      price: 199000,
-    },
-    {
-      id: 'XMF29592',
-      thumbnail: 'images/product3.webp',
-      reviews: 201,
-      name: '(1+1) 모노 카라 니트 집업',
-      discountRate: 14,
-      price: 58000,
-    },
-    {
-      id: 'XMMTP03H3',
-      thumbnail: 'images/product1.jpg',
-      reviews: 74,
-      name: '스트레치 기모 조거팬츠 블랙',
-      discountRate: 22,
-      price: 89000,
-    },
-    {
-      id: 'XMMPJ02H4',
-      thumbnail: 'images/product2.jpg',
-      reviews: 155,
-      name: '커뮤터 스트레치 라이트 롱 패딩 그레이',
-      discountRate: 15,
-      price: 199000,
-    },
-    {
-      id: 'XMF29592',
-      thumbnail: 'images/product3.webp',
-      reviews: 201,
-      name: '(1+1) 모노 카라 니트 집업',
-      discountRate: 14,
-      price: 58000,
-    },
-    {
-      id: 'XMMTP03H3',
-      thumbnail: 'images/product1.jpg',
-      reviews: 74,
-      name: '스트레치 기모 조거팬츠 블랙',
-      discountRate: 22,
-      price: 89000,
-    },
-    {
-      id: 'XMMPJ02H4',
-      thumbnail: 'images/product2.jpg',
-      reviews: 155,
-      name: '커뮤터 스트레치 라이트 롱 패딩 그레이',
-      discountRate: 15,
-      price: 199000,
-    },
-    {
-      id: 'XMF29592',
-      thumbnail: 'images/product3.webp',
-      reviews: 201,
-      name: '(1+1) 모노 카라 니트 집업',
-      discountRate: 14,
-      price: 58000,
-    },
-    {
-      id: 'XMMTP03H3',
-      thumbnail: 'images/product1.jpg',
-      reviews: 74,
-      name: '스트레치 기모 조거팬츠 블랙',
-      discountRate: 22,
-      price: 89000,
-    },
-    {
-      id: 'XMMPJ02H4',
-      thumbnail: 'images/product2.jpg',
-      reviews: 155,
-      name: '커뮤터 스트레치 라이트 롱 패딩 그레이',
-      discountRate: 15,
-      price: 199000,
-    },
-    {
-      id: 'XMF29592',
-      thumbnail: 'images/product3.webp',
-      reviews: 201,
-      name: '(1+1) 모노 카라 니트 집업',
-      discountRate: 14,
-      price: 58000,
-    },
-    // Add more products as needed
-  ];
+  const [hoveredProductId, setHoveredProductId] = useState(null);
+
+  const handleMouseEnter = (productId) => {
+    setHoveredProductId(productId);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredProductId(null);
+  };
+
+  const handleClick = () => {
+    // 상품 상세페이지로 이동하는 로직 추가
+  };
 
   return (
     <Grid
       container
-      spacing={4}
+      spacing={3}
       justifyContent="center"
       alignItems="flex-start"
       style={{ paddingLeft: '5em', paddingRight: '5em' }}
     >
       {products.map((product) => (
         <Grid item key={product.id} xs={12} sm={6} md={4} lg={2.4}>
-          <Card elevation={0}>
+          <Card
+            elevation={0}
+            onMouseEnter={() => handleMouseEnter(product.id)}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              paddingBottom: '3em',
+            }}
+          >
             {/* 썸네일 */}
             <div
               style={{
@@ -124,28 +177,30 @@ function ProductList() {
               }}
             >
               <img
-                src={product.thumbnail}
+                src={
+                  hoveredProductId === product.id
+                    ? product.thumbnail2 || product.thumbnail
+                    : product.thumbnail
+                }
                 alt={product.name}
                 style={{
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
                   position: 'absolute',
+                  cursor: 'pointer',
                 }}
+                onClick={() => handleClick(product.id)}
+                aria-hidden="true"
               />
             </div>
 
             <CardContent style={{ paddingLeft: 1 }}>
               <Grid container direction="column" spacing={1}>
+                {/* 업체명, 리뷰 수 */}
                 <Grid item container justifyContent="space-between">
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    style={{
-                      fontSize: '12px',
-                    }}
-                  >
-                    {product.id}
+                  <Typography variant="body2" color="textSecondary">
+                    {product.partnerName}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -156,39 +211,75 @@ function ProductList() {
                     리뷰 {product.reviews}
                   </Typography>
                 </Grid>
+                {/* 상품명 */}
                 <Grid item>
                   <Typography
                     variant="body1"
                     style={{
                       fontSize: '16px',
                       textAlign: 'left',
-                      paddingTop: '0.1em',
+                      paddingTop: '0.3em',
                       paddingBottom: '0.3em',
+                      cursor: 'pointer',
                     }}
+                    onClick={() => handleClick(product.id)}
+                    aria-hidden="true"
                   >
                     {product.name}
                   </Typography>
                 </Grid>
+                {/* 가격 */}
                 <Grid item container>
-                  <Typography
-                    variant="body2"
-                    style={{
-                      fontSize: '1.0rem',
-                      paddingRight: '0.5em',
-                      color: '#ff0000',
-                    }}
-                  >
-                    {product.discountRate}%
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    fontWeight="bold"
-                    style={{
-                      fontSize: '1.0rem',
-                    }}
-                  >
-                    {product.price.toLocaleString()}원
-                  </Typography>
+                  {product.discountRate > 0 ? (
+                    <>
+                      <Typography
+                        variant="body2"
+                        style={{
+                          fontSize: '1.0rem',
+                          paddingRight: '0.5em',
+                          color: '#ff0000',
+                        }}
+                      >
+                        {product.discountRate}%
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        fontWeight="bold"
+                        style={{
+                          fontSize: '1.0rem',
+                          paddingRight: '7px',
+                        }}
+                      >
+                        {(
+                          Math.round(
+                            (product.price * product.discountRate) / 1000,
+                          ) * 10
+                        ).toLocaleString()}
+                        원
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        style={{
+                          fontSize: '0.95rem',
+                          color: '#777',
+                          textDecoration: 'line-through',
+                        }}
+                      >
+                        {product.price.toLocaleString()}원
+                      </Typography>
+                    </>
+                  ) : (
+                    <Typography
+                      variant="body2"
+                      fontWeight="bold"
+                      style={{
+                        fontSize: '1.0rem',
+                        paddingRight: '7px',
+                      }}
+                    >
+                      {product.price.toLocaleString()}원
+                    </Typography>
+                  )}
                 </Grid>
               </Grid>
             </CardContent>
