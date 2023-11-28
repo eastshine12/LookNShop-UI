@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Grid, styled } from '@mui/material';
 
 const products = [
   {
@@ -11,7 +11,7 @@ const products = [
     name: '스트레치 기모 조거팬츠 블랙',
     discountRate: 23,
     price: 89011,
-    totalStock: 100,
+    totalStock: 0,
   },
   {
     id: 'XMMPJ02H4',
@@ -22,7 +22,7 @@ const products = [
     name: '커뮤터 스트레치 라이트 롱 패딩 그레이',
     discountRate: 15,
     price: 199000,
-    totalStock: 100,
+    totalStock: 10,
   },
   {
     id: 'XMF29592',
@@ -32,7 +32,7 @@ const products = [
     name: '(1+1) 모노 카라 니트 집업',
     discountRate: 14,
     price: 58000,
-    totalStock: 100,
+    totalStock: 50,
   },
   {
     id: 'XMMTP03H55',
@@ -133,6 +133,27 @@ const products = [
   // Add more products as needed
 ];
 
+// 품절 뱃지의 스타일을 지정합니다.
+const SoldOutBadge = styled('div')({
+  marginLeft: '0.5em',
+  padding: '0.2em 0.5em',
+  borderRadius: '4px',
+  backgroundColor: '#ff5b5b',
+  color: '#fff',
+  fontSize: '11px',
+});
+
+// 품절임박 뱃지의 스타일을 지정합니다.
+const AlmostSoldOutBadge = styled('div')({
+  marginLeft: '0.5em',
+  padding: '0.2em 0.5em',
+  borderRadius: '4px',
+  border: '1px solid #0067d1',
+  backgroundColor: '#fff',
+  color: '#0067d1',
+  fontSize: '11px',
+});
+
 function ProductList() {
   const [hoveredProductId, setHoveredProductId] = useState(null);
 
@@ -146,6 +167,17 @@ function ProductList() {
 
   const handleClick = () => {
     // 상품 상세페이지로 이동하는 로직 추가
+  };
+
+  // Product 컴포넌트에서 사용할 함수
+  const getStockBadge = (totalStock) => {
+    if (totalStock === 0) {
+      return <SoldOutBadge>품절</SoldOutBadge>;
+    }
+    if (totalStock <= 10) {
+      return <AlmostSoldOutBadge>품절임박</AlmostSoldOutBadge>;
+    }
+    return null; // 재고가 충분한 경우 뱃지를 표시하지 않음
   };
 
   return (
@@ -212,14 +244,18 @@ function ProductList() {
                   </Typography>
                 </Grid>
                 {/* 상품명 */}
-                <Grid item>
+                <Grid
+                  item
+                  style={{
+                    paddingTop: '1em',
+                    paddingBottom: '0.3em',
+                  }}
+                >
                   <Typography
                     variant="body1"
                     style={{
                       fontSize: '16px',
                       textAlign: 'left',
-                      paddingTop: '0.3em',
-                      paddingBottom: '0.3em',
                       cursor: 'pointer',
                     }}
                     onClick={() => handleClick(product.id)}
@@ -280,6 +316,7 @@ function ProductList() {
                       {product.price.toLocaleString()}원
                     </Typography>
                   )}
+                  <Grid item>{getStockBadge(product.totalStock)}</Grid>
                 </Grid>
               </Grid>
             </CardContent>
