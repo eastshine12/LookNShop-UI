@@ -1,19 +1,16 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable no-unused-vars */
-
-import React, { useState } from 'react';
+import * as React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 
-import { Grid, Stack, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import login from '../api/user/login';
+import signup from '../api/user/signup';
 
 const redirectToGoogle = () => {
   window.location.href = `http://${process.env.REACT_APP_BASE_URL}/oauth2/authorize/google?redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
@@ -27,30 +24,27 @@ const redirectToKakao = () => {
   window.location.href = `http://${process.env.REACT_APP_BASE_URL}/oauth2/authorize/kakao?redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
 };
 
-function Login() {
+export default function SignUp() {
   const navigate = useNavigate();
 
-  const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
-
-  const [loginData, setLoginData] = useState({
-    loginId: '',
-    password: '',
-  });
-
-  const handleLogin = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(loginData);
+    const data = new FormData(event.currentTarget);
+    console.log({
+      loginId: data.get('loginId'),
+      password: data.get('password'),
+      name: data.get('name'),
+      email: data.get('email'),
+    });
+
     try {
-      const response = await login(loginData);
+      const response = await signup(data);
       if (response) {
-        console.log('로그인 성공: ', response);
-        // eslint-disable-next-line dot-notation
-        setCookie('accessToken', response.headers['authorization']);
-        setCookie('refreshToken', response.headers['authorization-refresh']);
+        console.log('회원가입 성공: ', response);
         navigate('/');
       }
     } catch (error) {
-      console.error('로그인 실패:', error.message);
+      console.error('회원가입 실패:', error.message);
     }
   };
 
@@ -66,74 +60,92 @@ function Login() {
         }}
       >
         <Typography component="h1" variant="h5">
-          로그인
+          회원가입
         </Typography>
-        <Box noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="id"
-            label="아이디"
-            name="id"
-            autoComplete="id"
-            autoFocus
-            value={loginData.loginId}
-            onChange={(e) =>
-              setLoginData({ ...loginData, loginId: e.target.value })
-            }
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="비밀번호"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={loginData.password}
-            onChange={(e) =>
-              setLoginData({ ...loginData, password: e.target.value })
-            }
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="아이디 저장하기"
-          />
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="loginId"
+                label="아이디"
+                name="loginId"
+                autoComplete="id"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password"
+                label="비밀번호"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password2"
+                label="비밀번호 확인"
+                type="password"
+                id="password2"
+                autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="name"
+                label="이름"
+                name="name"
+                autoComplete="name"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="이메일"
+                name="email"
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="이용약관 개인정보 수집 및 정보이용에 동의합니다."
+              />
+            </Grid>
+          </Grid>
           <Button
-            type="button"
+            type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={handleLogin}
           >
-            로그인
+            가입하기
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link to="/" variant="body2">
-                비밀번호 찾기
-              </Link>
-            </Grid>
+          <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to="/signup" variant="body2">
-                회원가입
+              이미 계정이 있습니까?
+              <Link to="/login" variant="body2">
+                로그인
               </Link>
             </Grid>
           </Grid>
         </Box>
       </Box>
 
-      <Grid
-        container
-        alignItems="center"
-        justifyContent="center"
-        sx={{ mt: 5 }}
-      >
+      <Grid container alignItems="center" justifyContent="center">
         <Grid item xs={12}>
           <Typography variant="body2" sx={{ mb: 2 }}>
-            간편 로그인
+            간편 회원가입
           </Typography>
         </Grid>
         <Grid item xs={4}>
@@ -188,5 +200,3 @@ function Login() {
     </Container>
   );
 }
-
-export default Login;

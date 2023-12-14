@@ -69,11 +69,13 @@ function Navigation() {
       <Toolbar>
         {/* 로고 */}
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img
-            src="images/logo.png"
-            alt="Logo"
-            style={{ width: '100%', height: 36, marginRight: 5 }}
-          />
+          <Link to="/">
+            <img
+              src="images/logo.png"
+              alt="Logo"
+              style={{ width: '100%', height: 36, marginRight: 5 }}
+            />
+          </Link>
         </div>
 
         {/* 메뉴 */}
@@ -137,14 +139,11 @@ function Navigation() {
               onClose={handleAccountClose}
               style={{ marginTop: 40 }}
             >
-              <MenuItem onClick={handleAccountClose}>회원가입</MenuItem>
               <MenuItem onClick={handleAccountClose}>
-                <Link
-                  to="/login"
-                  style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                  로그인
-                </Link>
+                <Link to="/signup">회원가입</Link>
+              </MenuItem>
+              <MenuItem onClick={handleAccountClose}>
+                <Link to="/login">로그인</Link>
               </MenuItem>
               <MenuItem onClick={handleAccountClose}>주문내역</MenuItem>
             </Menu>

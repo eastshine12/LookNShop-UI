@@ -177,7 +177,7 @@ function ProductList() {
     if (totalStock <= 10) {
       return <AlmostSoldOutBadge>품절임박</AlmostSoldOutBadge>;
     }
-    return null; // 재고가 충분한 경우 뱃지를 표시하지 않음
+    return null;
   };
 
   return (
