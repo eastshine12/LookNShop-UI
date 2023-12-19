@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import SignUp from './pages/Signup';
 import AuthRedirectPage from './components/AuthRedirectPage';
 import UserProfile from './pages/UserProfile';
+import Logout from './pages/Logout';
 // import { AuthProvider } from './hooks/AuthProvider';
 
 const theme = createTheme({
@@ -37,6 +38,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/my-info" element={<UserProfile />} />
           <Route exact path="/oauth2/redirect" element={<AuthRedirectPage />} />
