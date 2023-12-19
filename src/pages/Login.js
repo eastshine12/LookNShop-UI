@@ -1,10 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-
 import { Grid, Stack, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,7 +11,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import { useCookies } from 'react-cookie';
 import login from '../api/user/login';
+import useAuthStore from '../util/useAuthStore';
 
 const redirectToGoogle = () => {
   window.location.href = `http://${process.env.REACT_APP_BASE_URL}/oauth2/authorize/google?redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
@@ -30,12 +30,12 @@ const redirectToKakao = () => {
 function Login() {
   const navigate = useNavigate();
 
-  const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
-
   const [loginData, setLoginData] = useState({
     loginId: '',
     password: '',
   });
+  const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
+  const { setUser } = useAuthStore();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -44,6 +44,7 @@ function Login() {
       const response = await login(loginData);
       if (response) {
         console.log('로그인 성공: ', response);
+        setUser(response.data);
         // eslint-disable-next-line dot-notation
         setCookie('accessToken', response.headers['authorization']);
         setCookie('refreshToken', response.headers['authorization-refresh']);

@@ -10,8 +10,8 @@ import {
   Toolbar,
   // Typography,
 } from '@mui/material';
-
 import { AccountCircle, Search, ShoppingCart } from '@mui/icons-material';
+import useAuthStore from '../util/useAuthStore';
 
 const menu = {
   BEST: ['NEW', 'OUTER', 'TOP'],
@@ -30,6 +30,8 @@ function Navigation() {
   const [anchorEl, setAnchorEl] = useState({});
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const { user } = useAuthStore();
+  const isLoggedIn = !!user;
 
   const handleSearchToggle = () => {
     setSearchOpen(!searchOpen);
@@ -102,7 +104,7 @@ function Navigation() {
                   anchorEl={anchorEl[mainMenu]}
                   open={Boolean(anchorEl[mainMenu])}
                   onClose={handleClose(mainMenu)}
-                  style={{ marginTop: 40 }}
+                  style={{ marginTop: 10 }}
                 >
                   {menu[mainMenu].map((subMenu) => (
                     <MenuItem key={subMenu} onClick={handleClose(mainMenu)}>
@@ -137,15 +139,34 @@ function Navigation() {
               anchorEl={accountAnchorEl}
               open={Boolean(accountAnchorEl)}
               onClose={handleAccountClose}
-              style={{ marginTop: 40 }}
+              style={{ marginTop: 10 }}
             >
-              <MenuItem onClick={handleAccountClose}>
-                <Link to="/signup">회원가입</Link>
-              </MenuItem>
-              <MenuItem onClick={handleAccountClose}>
-                <Link to="/login">로그인</Link>
-              </MenuItem>
-              <MenuItem onClick={handleAccountClose}>주문내역</MenuItem>
+              {' '}
+              {!isLoggedIn ? (
+                <>
+                  <MenuItem onClick={handleAccountClose}>
+                    <Link to="/signup">회원가입</Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleAccountClose}>
+                    <Link to="/login">로그인</Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleAccountClose}>
+                    <Link to="/order-detail">주문내역</Link>
+                  </MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem onClick={handleAccountClose}>
+                    <Link to="/my-info">내 정보</Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleAccountClose}>
+                    <Link to="/order-detail">주문내역</Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleAccountClose}>
+                    <Link to="/logout">로그아웃</Link>
+                  </MenuItem>
+                </>
+              )}
             </Menu>
           </div>
 

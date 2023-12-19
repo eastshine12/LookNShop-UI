@@ -4,9 +4,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CustomCarousel from './components/Carousel';
 import Navigation from './components/Navigation';
 import ProductList from './components/ProductList';
-import Login from './components/Login';
-import SignUp from './components/Signup';
+import Login from './pages/Login';
+import SignUp from './pages/Signup';
 import AuthRedirectPage from './components/AuthRedirectPage';
+import UserProfile from './pages/UserProfile';
+// import { AuthProvider } from './hooks/AuthProvider';
 
 const theme = createTheme({
   typography: {
@@ -36,6 +38,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/my-info" element={<UserProfile />} />
           <Route exact path="/oauth2/redirect" element={<AuthRedirectPage />} />
         </Routes>
       </ThemeProvider>
