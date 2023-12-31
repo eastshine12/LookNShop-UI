@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Grid, styled } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import getAllProducts from '../api/product/getAllProducts';
 
-const products = [
+const mockProducts = [
   {
-    id: 'XMMTP03H3',
+    productId: 'XMMTP03H3',
     partnerName: '업체이름1',
     thumbnail: 'images/product1.jpg',
     thumbnail2: 'images/product1-1.jpg',
@@ -14,7 +16,7 @@ const products = [
     totalStock: 0,
   },
   {
-    id: 'XMMPJ02H4',
+    productId: 'XMMPJ02H4',
     partnerName: '업체이름1',
     thumbnail: 'images/product2.jpg',
     thumbnail2: 'images/product2-2.jpg',
@@ -25,7 +27,7 @@ const products = [
     totalStock: 10,
   },
   {
-    id: 'XMF29592',
+    productId: 'XMF29592',
     partnerName: '업체이름1',
     thumbnail: 'images/product3.webp',
     reviews: 201,
@@ -35,7 +37,7 @@ const products = [
     totalStock: 50,
   },
   {
-    id: 'XMMTP03H55',
+    productId: 'XMMTP03H55',
     partnerName: '업체이름1',
     thumbnail: 'images/product1.jpg',
     thumbnail2: 'images/product1-1.jpg',
@@ -46,7 +48,7 @@ const products = [
     totalStock: 100,
   },
   {
-    id: 'XMMPJ02H66',
+    productId: 'XMMPJ02H66',
     partnerName: '업체이름1',
     thumbnail: 'images/product2.jpg',
     thumbnail2: 'images/product2-2.jpg',
@@ -57,7 +59,7 @@ const products = [
     totalStock: 100,
   },
   {
-    id: 'XMF295922',
+    productId: 'XMF295922',
     partnerName: '업체이름1',
     thumbnail: 'images/product3.webp',
     reviews: 201,
@@ -67,7 +69,7 @@ const products = [
     totalStock: 100,
   },
   {
-    id: 'XMMTP03H61',
+    productId: 'XMMTP03H61',
     partnerName: '업체이름1',
     thumbnail: 'images/product1.jpg',
     thumbnail2: 'images/product1-1.jpg',
@@ -89,7 +91,7 @@ const products = [
     totalStock: 100,
   },
   {
-    id: 'XMF2959122',
+    productId: 'XMF2959122',
     partnerName: '업체이름1',
     thumbnail: 'images/product3.webp',
     reviews: 201,
@@ -99,7 +101,7 @@ const products = [
     totalStock: 100,
   },
   {
-    id: 'XMMTP03H437',
+    productId: 'XMMTP03H437',
     partnerName: '업체이름1',
     thumbnail: 'images/product1.jpg',
     thumbnail2: 'images/product1-1.jpg',
@@ -110,7 +112,7 @@ const products = [
     totalStock: 100,
   },
   {
-    id: 'XMMPJ0223H48',
+    productId: 'XMMPJ0223H48',
     partnerName: '업체이름1',
     thumbnail: 'images/product2.jpg',
     thumbnail2: 'images/product2-2.jpg',
@@ -121,7 +123,7 @@ const products = [
     totalStock: 100,
   },
   {
-    id: 'XMF295592',
+    productId: 'XMF295592',
     partnerName: '업체이름1',
     thumbnail: 'images/product3.webp',
     reviews: 201,
@@ -155,6 +157,9 @@ const AlmostSoldOutBadge = styled('div')({
 });
 
 function ProductList() {
+
+  const navigate = useNavigate();
+  const [products, setProducts] = useState(mockProducts);
   const [hoveredProductId, setHoveredProductId] = useState(null);
 
   const handleMouseEnter = (productId) => {
@@ -165,8 +170,8 @@ function ProductList() {
     setHoveredProductId(null);
   };
 
-  const handleClick = () => {
-    // 상품 상세페이지로 이동하는 로직 추가
+  const handleClick = (productId) => {
+    navigate(`/product?id=${productId}`)
   };
 
   // Product 컴포넌트에서 사용할 함수
@@ -180,6 +185,15 @@ function ProductList() {
     return null;
   };
 
+  const fetchData = async () => {
+    const response = await getAllProducts();
+    setProducts(response);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Grid
       container
@@ -192,7 +206,7 @@ function ProductList() {
         <Grid item key={product.id} xs={12} sm={6} md={4} lg={2.4}>
           <Card
             elevation={0}
-            onMouseEnter={() => handleMouseEnter(product.id)}
+            onMouseEnter={() => handleMouseEnter(product.productId)}
             onMouseLeave={handleMouseLeave}
             style={{
               paddingBottom: '3em',
@@ -210,11 +224,11 @@ function ProductList() {
             >
               <img
                 src={
-                  hoveredProductId === product.id
-                    ? product.thumbnail2 || product.thumbnail
-                    : product.thumbnail
+                  hoveredProductId === product.productId && product.thumbnail2
+                    ? `http://${process.env.REACT_APP_BASE_URL}${product.thumbnail2}`
+                    : `http://${process.env.REACT_APP_BASE_URL}${product.thumbnail1}`
                 }
-                alt={product.name}
+                alt={product.title}
                 style={{
                   width: '100%',
                   height: '100%',
@@ -222,7 +236,7 @@ function ProductList() {
                   position: 'absolute',
                   cursor: 'pointer',
                 }}
-                onClick={() => handleClick(product.id)}
+                onClick={() => handleClick(product.productId)}
                 aria-hidden="true"
               />
             </div>
@@ -258,10 +272,10 @@ function ProductList() {
                       textAlign: 'left',
                       cursor: 'pointer',
                     }}
-                    onClick={() => handleClick(product.id)}
+                    onClick={() => handleClick(product.productId)}
                     aria-hidden="true"
                   >
-                    {product.name}
+                    {product.title}
                   </Typography>
                 </Grid>
                 {/* 가격 */}
@@ -288,7 +302,7 @@ function ProductList() {
                       >
                         {(
                           Math.round(
-                            (product.price * product.discountRate) / 1000,
+                            (product.price * (100-product.discountRate)) / 1000,
                           ) * 10
                         ).toLocaleString()}
                         원
